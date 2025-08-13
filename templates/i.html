@@ -1,0 +1,46 @@
+\<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Phishing Detector</title>
+</head>
+<body>
+    <h1>URL Phishing Detector</h1>
+    <form id="urlForm">
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Check URL</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.getElementById('urlForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const url = document.getElementById('url').value;
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            });
+            const data = await response.json();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `URL: ${data.url} - Result: ${data.result}`;
+            if (data.result === 'Phishing') {
+                const block = confirm('This URL is predicted as phishing. Do you want to block it?');
+                if (block) {
+                    await fetch('/block', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ url: url })
+                    });
+                    resultDiv.innerHTML += '<br>URL has been blocked.';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
