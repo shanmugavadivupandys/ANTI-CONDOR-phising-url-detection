@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTI-CONDOR - Phishing URL Detector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>ANTI-CONDOR<br>The Phishing URL Detector</h1>
+        <form id="checkForm" class="form">
+            <label for="url">Enter a URL:</label>
+            <input type="text" id="url" name="url" placeholder="https://example.com" required>
+            <button type="submit">Check URL</button>
+        </form>
+        <div id="resultContainer" class="result" style="display: none;">
+            <h2>Prediction Result:</h2>
+            <p id="resultText"></p>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
